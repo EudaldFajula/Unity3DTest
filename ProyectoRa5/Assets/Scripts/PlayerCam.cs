@@ -7,6 +7,10 @@ public class CameraControllers : MonoBehaviour, InputSystem_Actions.ICameraContr
     public GameObject ThirdPersonCam;
     public bool ChangeCamera = true;
     private InputSystem_Actions inputActions;
+    [SerializeField] private float _senseX;
+    [SerializeField] private float _senseY;
+    private float rotationX;
+    private float rotationY;
     private void ChangeFirstPerson()
     {
         FirstPersonCam.SetActive(true);
@@ -52,8 +56,20 @@ public class CameraControllers : MonoBehaviour, InputSystem_Actions.ICameraContr
         else
         {
             ChangeFirstPerson();
+            float mouseX = Input.GetAxisRaw("Mouse X") * _senseX;
+            float mouseY = Input.GetAxisRaw("Mouse Y") * _senseY;
+            rotationY += mouseX;
+            rotationX -= mouseY;
+            rotationX = Mathf.Clamp(rotationX, -67.5f, 67.5f);
+        }
+    }
+    private void LateUpdate()
+    {
+        if (!ChangeCamera)
+        {
+            FirstPersonCam.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
         }
     }
 
-    
+
 }

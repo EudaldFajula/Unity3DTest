@@ -3,30 +3,51 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerActions
 {
-    public void OnJump(InputAction.CallbackContext context)
+    private InputSystem_Actions inputActions;
+    private MoveBehaviour moveBehaviour;
+
+    private Vector2 moveInput;
+
+    [Header("Camera Reference")]
+    public Transform cameraTransform;
+
+    private void Awake()
     {
-        throw new System.NotImplementedException();
+        inputActions = new InputSystem_Actions();
+        inputActions.Player.SetCallbacks(this);
+
+        moveBehaviour = GetComponent<MoveBehaviour>();
+    }
+
+    private void OnEnable()
+    {
+        inputActions.Enable();
+    }
+
+    private void OnDisable()
+    {
+        inputActions.Disable();
     }
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        throw new System.NotImplementedException();
+        moveInput = context.ReadValue<Vector2>();
     }
 
-    public void OnSprint(InputAction.CallbackContext context)
+    public void OnJump(InputAction.CallbackContext context)
     {
-        throw new System.NotImplementedException();
+        if (context.started)
+        {
+            moveBehaviour.JumpCharacter();
+        }
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public void OnAttack(InputAction.CallbackContext context) { }
+    public void OnDance(InputAction.CallbackContext context) { }
+    public void OnSprint(InputAction.CallbackContext context) { }
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        
+        moveBehaviour.MoveCharacter(moveInput, cameraTransform);
     }
 }
