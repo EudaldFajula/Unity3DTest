@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
     private Vector2 moveInput;
 
     [Header("Camera Reference")]
-    public Transform cameraTransform;
+    public CameraControllers cameraTransform;
 
     private void Awake()
     {
@@ -46,8 +46,8 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
     public void OnDance(InputAction.CallbackContext context) { }
     public void OnSprint(InputAction.CallbackContext context) { }
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
-        moveBehaviour.MoveCharacter(moveInput, cameraTransform);
+        moveBehaviour.MoveCharacter(moveInput, cameraTransform.CurrentCameraTransform);
     }
 }

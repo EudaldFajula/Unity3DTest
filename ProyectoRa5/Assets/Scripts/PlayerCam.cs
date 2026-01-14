@@ -11,15 +11,18 @@ public class CameraControllers : MonoBehaviour, InputSystem_Actions.ICameraContr
     [SerializeField] private float _senseY;
     private float rotationX;
     private float rotationY;
+    public Transform CurrentCameraTransform = null;
     private void ChangeFirstPerson()
     {
         FirstPersonCam.SetActive(true);
         ThirdPersonCam.SetActive(false);
+        CurrentCameraTransform = FirstPersonCam.transform;
     }
     private void ChangeThirdPerson()
     {
         FirstPersonCam.SetActive(false);
-        ThirdPersonCam.SetActive(true); 
+        ThirdPersonCam.SetActive(true);
+        CurrentCameraTransform = ThirdPersonCam.transform;
     }
     private void Awake()
     {
