@@ -5,8 +5,11 @@ public class MoveBehaviour : MonoBehaviour
     private Rigidbody _rb;
 
     [Header("Movement")]
-    public float speed = 6f;
+    [Header("Movement")]
+    public float walkSpeed = 6f;
+    public float runSpeed = 10f;
     public float jumpForce = 7f;
+
 
     [Header("Ground Check")]
     public Transform groundCheck;
@@ -18,7 +21,7 @@ public class MoveBehaviour : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
     }
 
-    public void MoveCharacter(Vector2 input, Transform cameraTransform)
+    public void MoveCharacter(Vector2 input, Transform cameraTransform, bool isSprinting)
     {
         // Movimiento relativo a la cámara
         Vector3 forward = cameraTransform.forward;
@@ -32,19 +35,28 @@ public class MoveBehaviour : MonoBehaviour
 
         Vector3 move = forward * input.y + right * input.x;
 
+        // Elegir velocidad según sprint
+        float currentSpeed = isSprinting ? runSpeed : walkSpeed;
+
         // Aplicar velocidad
-        Vector3 velocity = new Vector3(move.normalized.x * speed, _rb.linearVelocity.y, move.normalized.z * speed);
+        Vector3 velocity = new Vector3(
+            move.normalized.x * currentSpeed,
+            _rb.linearVelocity.y,
+            move.normalized.z * currentSpeed
+        );
+
         _rb.linearVelocity = velocity;
 
+        // Rotación del personaje
         Vector3 lookDirection = new Vector3(move.x, 0, move.z);
 
-        // evita rotación cuando no te mueves
-        if (lookDirection.sqrMagnitude > 0.01f) 
+        if (lookDirection.sqrMagnitude > 0.01f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10f * Time.deltaTime);
         }
     }
+
 
 
     public void JumpCharacter()
@@ -61,6 +73,11 @@ public class MoveBehaviour : MonoBehaviour
 
     public bool IsGrounded()
     {
+       
+
+        Debug.DrawRay(groundCheck.position, Vector3.down * groundDistance);
+
         return Physics.Raycast(groundCheck.position, Vector3.down, groundDistance, groundLayer);
     }
+
 }
