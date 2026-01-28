@@ -6,16 +6,20 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
     private InputSystem_Actions inputActions;
     private MoveBehaviour moveBehaviour;
     public Animator animator;
-
+    [SerializeField] public Rigidbody _rb;
     private Vector2 moveInput;
     private bool isSprinting = false;
     private bool isDancing = false;
+
+    // Miquel varbiable
+    private float velocity;
 
     [Header("Camera Reference")]
     public CameraControllers cameraTransform;
 
     private void Awake()
     {
+        _rb = GetComponent<Rigidbody>();
         inputActions = new InputSystem_Actions();
         inputActions.Player.SetCallbacks(this);
 
@@ -34,7 +38,6 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        // Opción A: NO cancelar baile al mover
         moveInput = context.ReadValue<Vector2>();
     }
 
@@ -56,7 +59,6 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
             isDancing = true;
             animator.SetBool("dance", true);
 
-            // Forzar que no haya movimiento
             moveInput = Vector2.zero;
         }
     }
@@ -69,37 +71,43 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
         if (context.canceled)
             isSprinting = false;
     }
-
+    private void Update()
+    {
+        animator.SetFloat("speed", velocity);
+    }
+    private void FixedUpdate()
+    {
+        velocity = new Vector3(_rb.linearVelocity.x, 0, _rb.linearVelocity.z).magnitude;
+        Debug.Log(velocity);
+    }
     private void LateUpdate()
     {
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-        // 🔒 BLOQUEAR MOVIMIENTO MIENTRAS BAILA
         if (isDancing)
         {
-            animator.SetFloat("speed", 0);
+            //animator.SetFloat("speed", 0);
 
-            // Detectar si la animación de baile terminó
             if (stateInfo.IsName("Dance") && stateInfo.normalizedTime >= 1f)
             {
                 isDancing = false;
                 animator.SetBool("dance", false);
             }
 
-            return; // No permitir movimiento
+            return;
         }
 
-        // Movimiento normal
         moveBehaviour.MoveCharacter(moveInput, cameraTransform.CurrentCameraTransform, isSprinting);
 
         if (moveBehaviour.IsGrounded())
             animator.SetBool("jump", false);
-
+        /*
         if (moveInput == Vector2.zero)
             animator.SetFloat("speed", 0);
         else if (!isSprinting)
             animator.SetFloat("speed", 0.5f);
         else
             animator.SetFloat("speed", 1f);
+        */
     }
 }

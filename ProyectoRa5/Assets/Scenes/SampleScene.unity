@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 328637276}
   - component: {fileID: 328637275}
   - component: {fileID: 328637274}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -950,7 +950,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MoveBehaviour
   walkSpeed: 6
   runSpeed: 10
-  jumpForce: 4
+  jumpForce: 7
   groundCheck: {fileID: 2129667033}
   groundDistance: 0.2
   groundLayer:
@@ -987,6 +987,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   animator: {fileID: 2129667034}
+  _rb: {fileID: 0}
   cameraTransform: {fileID: 1328783150}
 --- !u!54 &1328783153
 Rigidbody:
