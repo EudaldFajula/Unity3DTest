@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
     private InputSystem_Actions inputActions;
     private MoveBehaviour moveBehaviour;
     public Animator animator;
-    [SerializeField] public Rigidbody _rb;
+    private Rigidbody _rb;
     private Vector2 moveInput;
     private bool isSprinting = false;
     private bool isDancing = false;

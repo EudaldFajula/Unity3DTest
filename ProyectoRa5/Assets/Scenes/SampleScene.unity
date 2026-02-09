@@ -299,7 +299,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.15212338, y: 2.5569987e-23, z: -3.9355975e-24, w: 0.98836154}
+  m_LocalRotation: {x: 0.15212332, y: -0.0000000063959242, z: 9.844264e-10, w: 0.98836154}
   m_LocalPosition: {x: 15.977933, y: 2.1535292, z: 17.607677}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -394,6 +394,7 @@ GameObject:
   - component: {fileID: 399522731}
   - component: {fileID: 399522730}
   - component: {fileID: 399522729}
+  - component: {fileID: 399522733}
   - component: {fileID: 399522728}
   m_Layer: 0
   m_Name: ThirdPersonCamera
@@ -603,13 +604,43 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 399522727}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.1521234, y: 0, z: 0, w: 0.98836154}
+  m_LocalRotation: {x: 0.15212332, y: -0.0000000066222654, z: 0.0000000024549869, w: 0.98836154}
   m_LocalPosition: {x: 15.977933, y: 2.1535292, z: 17.607677}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 17.56, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 17.59, y: 0, z: 0}
+--- !u!114 &399522733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 399522727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca7de3aefa901374ba29464584a3109a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineDecollider
+  CameraRadius: 0.4
+  Decollision:
+    Enabled: 0
+    ObstacleLayers:
+      serializedVersion: 2
+      m_Bits: 1
+    UseFollowTarget:
+      Enabled: 0
+      YOffset: 0
+    Damping: 0.5
+    SmoothingTime: 0
+  TerrainResolution:
+    Enabled: 1
+    TerrainLayers:
+      serializedVersion: 2
+      m_Bits: 8
+    MaximumRaycast: 10
+    Damping: 0.5
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -950,7 +981,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   animator: {fileID: 2129667034}
-  _rb: {fileID: 0}
   cameraTransform: {fileID: 1328783150}
 --- !u!54 &1328783153
 Rigidbody:
