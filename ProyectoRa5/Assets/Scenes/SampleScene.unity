@@ -184,7 +184,7 @@ Terrain:
   m_StaticShadowCaster: 0
   m_IgnoreQualitySettings: 0
   m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 2100000, guid: 594ea882c5a793440b60ff72d896021e, type: 2}
+  m_MaterialTemplate: {fileID: 2100000, guid: 3e5c9dbe96902a546a1eb793d6411760, type: 2}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
@@ -1746,8 +1746,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 12
   m_Type: 2
-  m_Color: {r: 0.6509434, g: 0.09540362, b: 0, a: 1}
-  m_Intensity: 5.65
+  m_Color: {r: 0.6509434, g: 0.5175647, b: 0.009211446, a: 1}
+  m_Intensity: 9.65
   m_Range: 2.27
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
