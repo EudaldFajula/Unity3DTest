@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
     private void FixedUpdate()
     {
         velocity = new Vector3(_rb.linearVelocity.x, 0, _rb.linearVelocity.z).magnitude;
-        Debug.Log(velocity);
+        moveBehaviour.MoveCharacter(moveInput, cameraTransform.CurrentCameraTransform, isSprinting);
     }
     private void LateUpdate()
     {
@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
             return;
         }
 
-        moveBehaviour.MoveCharacter(moveInput, cameraTransform.CurrentCameraTransform, isSprinting);
+        
 
         if (moveBehaviour.IsGrounded())
             animator.SetBool("jump", false);
