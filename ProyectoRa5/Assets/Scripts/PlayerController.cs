@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
     private bool isDancing = false;
     [SerializeField] private InteractBehavior interactBehavior;
     [SerializeField] private Collider interactionCollider;
+    [SerializeField] private GameDataController gameDataController;
 
     // Miquel varbiable
     private float velocity;
@@ -82,6 +83,13 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
         if (context.canceled)
             isSprinting = false;
     }
+    public void OnSaveGame(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            gameDataController.SaveData();
+        }
+    }
     #endregion
 
     #region Metodos Update
@@ -124,5 +132,7 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
             animator.SetFloat("speed", 1f);
         */
     }
+
+    
     #endregion
 }

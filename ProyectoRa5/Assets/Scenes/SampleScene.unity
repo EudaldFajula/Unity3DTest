@@ -254,6 +254,54 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4989481681060946092, guid: 120d7631bf5b4b94f8271411b1868e06, type: 3}
   m_PrefabInstance: {fileID: 1607493035}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &200409492
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 200409494}
+  - component: {fileID: 200409493}
+  m_Layer: 0
+  m_Name: GameDataController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &200409493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200409492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 132b57146680502489475be7b3d40c84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  player: {fileID: 1328783147}
+  flareGunFloor: {fileID: 1873663352}
+  flareGunHand: {fileID: 1587104519}
+  saveFile: 
+--- !u!4 &200409494
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200409492}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 57.39483, y: 0, z: 21.81048}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &248332742
 GameObject:
   m_ObjectHideFlags: 0
@@ -2703,6 +2751,7 @@ MonoBehaviour:
   animator: {fileID: 2129667034}
   interactBehavior: {fileID: 512977999}
   interactionCollider: {fileID: 512977998}
+  gameDataController: {fileID: 200409493}
   cameraTransform: {fileID: 1328783150}
 --- !u!54 &1328783153
 Rigidbody:
@@ -5252,3 +5301,4 @@ SceneRoots:
   - {fileID: 1716162349}
   - {fileID: 1178175937}
   - {fileID: 1316036234}
+  - {fileID: 200409494}
