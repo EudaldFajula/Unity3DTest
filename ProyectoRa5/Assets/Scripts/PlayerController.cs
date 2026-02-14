@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
     private Vector2 moveInput;
     private bool isSprinting = false;
     private bool isDancing = false;
+    [SerializeField] private InteractBehavior interactBehavior;
+    [SerializeField] private Collider interactionCollider;
 
     // Miquel varbiable
     private float velocity;
@@ -22,7 +24,6 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
         _rb = GetComponent<Rigidbody>();
         inputActions = new InputSystem_Actions();
         inputActions.Player.SetCallbacks(this);
-
         moveBehaviour = GetComponent<MoveBehaviour>();
     }
 
@@ -36,6 +37,9 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
         inputActions.Disable();
     }
 
+    
+
+    #region Metodos Input System
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
@@ -49,7 +53,14 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
             moveBehaviour.JumpCharacter();
         }
     }
+    public void OnInteract(InputAction.CallbackContext context)
+    {
 
+        if (context.started)
+        {
+            interactBehavior.Interact();
+        }
+    }
     public void OnAttack(InputAction.CallbackContext context) { }
 
     public void OnDance(InputAction.CallbackContext context)
@@ -71,6 +82,9 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
         if (context.canceled)
             isSprinting = false;
     }
+    #endregion
+
+    #region Metodos Update
     private void Update()
     {
         animator.SetFloat("speed", velocity);
@@ -110,4 +124,5 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
             animator.SetFloat("speed", 1f);
         */
     }
+    #endregion
 }
