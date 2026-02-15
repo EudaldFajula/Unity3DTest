@@ -62,7 +62,10 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
             interactBehavior.Interact();
         }
     }
-    public void OnAttack(InputAction.CallbackContext context) { }
+    public void OnAttack(InputAction.CallbackContext context) 
+    {
+        animator.SetTrigger("attack");
+    }
 
     public void OnDance(InputAction.CallbackContext context)
     {
@@ -123,14 +126,6 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
 
         if (moveBehaviour.IsGrounded())
             animator.SetBool("jump", false);
-        /*
-        if (moveInput == Vector2.zero)
-            animator.SetFloat("speed", 0);
-        else if (!isSprinting)
-            animator.SetFloat("speed", 0.5f);
-        else
-            animator.SetFloat("speed", 1f);
-        */
     }
 
     
