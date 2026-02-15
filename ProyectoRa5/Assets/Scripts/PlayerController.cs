@@ -43,7 +43,10 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
     #region Metodos Input System
     public void OnMove(InputAction.CallbackContext context)
     {
-        moveInput = context.ReadValue<Vector2>();
+        if (!isDancing)
+        {
+            moveInput = context.ReadValue<Vector2>();
+        }
     }
 
     public void OnJump(InputAction.CallbackContext context)
