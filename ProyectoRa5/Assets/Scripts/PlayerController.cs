@@ -67,7 +67,10 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
     }
     public void OnAttack(InputAction.CallbackContext context) 
     {
-        animator.SetTrigger("attack");
+        if (context.started)
+        {
+            animator.SetTrigger("attack");
+        }
     }
 
     public void OnDance(InputAction.CallbackContext context)
@@ -114,8 +117,6 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
 
         if (isDancing)
         {
-            //animator.SetFloat("speed", 0);
-
             if (stateInfo.IsName("Dance") && stateInfo.normalizedTime >= 1f)
             {
                 isDancing = false;
@@ -125,12 +126,8 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
             return;
         }
 
-        
-
         if (moveBehaviour.IsGrounded())
             animator.SetBool("jump", false);
     }
-
-    
     #endregion
 }
