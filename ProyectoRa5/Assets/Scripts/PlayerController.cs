@@ -13,8 +13,6 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
     [SerializeField] private InteractBehavior interactBehavior;
     [SerializeField] private Collider interactionCollider;
     [SerializeField] private GameDataController gameDataController;
-
-    // Miquel varbiable
     private float velocity;
 
     [Header("Camera Reference")]
@@ -53,8 +51,8 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
     {
         if (context.started && !isDancing)
         {
-            animator.SetBool("jump", true);
-            moveBehaviour.JumpCharacter();
+            animator.SetBool("JumpRequest", true);
+            moveBehaviour.JumpCharacter(transform);
         }
     }
     public void OnInteract(InputAction.CallbackContext context)
@@ -122,12 +120,11 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
                 isDancing = false;
                 animator.SetBool("dance", false);
             }
-
             return;
         }
 
-        if (moveBehaviour.IsGrounded())
-            animator.SetBool("jump", false);
+        animator.SetBool("IsGrounded", moveBehaviour.IsGrounded(transform));
+        animator.SetBool("JumpRequest", false);
     }
     #endregion
 }

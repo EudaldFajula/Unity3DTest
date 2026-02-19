@@ -12,7 +12,6 @@ public class MoveBehaviour : MonoBehaviour
 
 
     [Header("Ground Check")]
-    public Transform groundCheck;
     public float groundDistance = 0.2f;
     public LayerMask groundLayer;
 
@@ -59,9 +58,9 @@ public class MoveBehaviour : MonoBehaviour
 
 
 
-    public void JumpCharacter()
+    public void JumpCharacter(Transform transformPlayer)
     {
-        if (IsGrounded())
+        if (IsGrounded(transformPlayer))
         {
             Vector3 v = _rb.linearVelocity;
             v.y = 0f;
@@ -71,13 +70,12 @@ public class MoveBehaviour : MonoBehaviour
         }
     }
 
-    public bool IsGrounded()
+    public bool IsGrounded(Transform transformPlayer)
     {
-       
+         Vector3 positionRayCast = new Vector3(transformPlayer.position.x, transformPlayer.position.y + 1, transformPlayer.position.z);
+        Debug.DrawRay(positionRayCast, Vector3.down * groundDistance);
 
-        Debug.DrawRay(groundCheck.position, Vector3.down * groundDistance);
-
-        return Physics.Raycast(groundCheck.position, Vector3.down, groundDistance, groundLayer);
+        return Physics.Raycast(positionRayCast, Vector3.down, groundDistance, groundLayer);
     }
 
 }
