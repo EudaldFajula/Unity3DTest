@@ -929,6 +929,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Look"",
+                    ""type"": ""Value"",
+                    ""id"": ""9b34ea36-fbd1-4d5d-aeed-88f142d0335c"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -940,6 +949,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ChangeCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eea46e38-d382-473f-a4d7-dde8a7b867ba"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1033,6 +1053,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         // CameraControllers
         m_CameraControllers = asset.FindActionMap("CameraControllers", throwIfNotFound: true);
         m_CameraControllers_ChangeCamera = m_CameraControllers.FindAction("ChangeCamera", throwIfNotFound: true);
+        m_CameraControllers_Look = m_CameraControllers.FindAction("Look", throwIfNotFound: true);
     }
 
     ~@InputSystem_Actions()
@@ -1473,6 +1494,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_CameraControllers;
     private List<ICameraControllersActions> m_CameraControllersActionsCallbackInterfaces = new List<ICameraControllersActions>();
     private readonly InputAction m_CameraControllers_ChangeCamera;
+    private readonly InputAction m_CameraControllers_Look;
     /// <summary>
     /// Provides access to input actions defined in input action map "CameraControllers".
     /// </summary>
@@ -1488,6 +1510,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "CameraControllers/ChangeCamera".
         /// </summary>
         public InputAction @ChangeCamera => m_Wrapper.m_CameraControllers_ChangeCamera;
+        /// <summary>
+        /// Provides access to the underlying input action "CameraControllers/Look".
+        /// </summary>
+        public InputAction @Look => m_Wrapper.m_CameraControllers_Look;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1517,6 +1543,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @ChangeCamera.started += instance.OnChangeCamera;
             @ChangeCamera.performed += instance.OnChangeCamera;
             @ChangeCamera.canceled += instance.OnChangeCamera;
+            @Look.started += instance.OnLook;
+            @Look.performed += instance.OnLook;
+            @Look.canceled += instance.OnLook;
         }
 
         /// <summary>
@@ -1531,6 +1560,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @ChangeCamera.started -= instance.OnChangeCamera;
             @ChangeCamera.performed -= instance.OnChangeCamera;
             @ChangeCamera.canceled -= instance.OnChangeCamera;
+            @Look.started -= instance.OnLook;
+            @Look.performed -= instance.OnLook;
+            @Look.canceled -= instance.OnLook;
         }
 
         /// <summary>
@@ -1778,5 +1810,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnChangeCamera(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Look" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLook(InputAction.CallbackContext context);
     }
 }

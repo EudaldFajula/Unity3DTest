@@ -9,11 +9,11 @@ public class MoveBehaviour : MonoBehaviour
     public float walkSpeed = 6f;
     public float runSpeed = 10f;
     public float jumpForce = 7f;
-
-
+    private bool _isGrounded;
     [Header("Ground Check")]
-    public float groundDistance = 0.2f;
     public LayerMask groundLayer;
+    [SerializeField] private Transform _groundCheck;
+    [SerializeField] private float _groundRadius = 0.3f;
 
     private void Awake()
     {
@@ -39,9 +39,9 @@ public class MoveBehaviour : MonoBehaviour
 
         // Aplicar velocidad
         Vector3 velocity = new Vector3(
-            move.normalized.x * currentSpeed,
+            move.x * currentSpeed,
             _rb.linearVelocity.y,
-            move.normalized.z * currentSpeed
+            move.z * currentSpeed
         );
 
         _rb.linearVelocity = velocity;
@@ -69,13 +69,19 @@ public class MoveBehaviour : MonoBehaviour
             _rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
     }
+    private void OnDrawGizmosSelected()
+    {
+        if (_groundCheck != null)
+        {
+            Gizmos.color = _isGrounded ? Color.green : Color.red;
+            Gizmos.DrawWireSphere(_groundCheck.position, _groundRadius);
+        }
+    }
 
     public bool IsGrounded(Transform transformPlayer)
     {
-         Vector3 positionRayCast = new Vector3(transformPlayer.position.x, transformPlayer.position.y + 1, transformPlayer.position.z);
-        Debug.DrawRay(positionRayCast, Vector3.down * groundDistance);
-
-        return Physics.Raycast(positionRayCast, Vector3.down, groundDistance, groundLayer);
+        _isGrounded = Physics.CheckSphere(_groundCheck.position, _groundRadius, groundLayer);
+        return _isGrounded;
     }
-
+    
 }

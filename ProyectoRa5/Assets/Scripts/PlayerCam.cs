@@ -5,25 +5,16 @@ public class CameraControllers : MonoBehaviour, InputSystem_Actions.ICameraContr
 {
     public GameObject FirstPersonCam;
     public GameObject ThirdPersonCam;
-    public bool ChangeCamera = true;
     private InputSystem_Actions inputActions;
     [SerializeField] private float _senseX;
     [SerializeField] private float _senseY;
     private float rotationX;
     private float rotationY;
     public Transform CurrentCameraTransform = null;
-    private void ChangeFirstPerson()
-    {
-        FirstPersonCam.SetActive(true);
-        ThirdPersonCam.SetActive(false);
-        CurrentCameraTransform = FirstPersonCam.transform;
-    }
-    private void ChangeThirdPerson()
-    {
-        FirstPersonCam.SetActive(false);
-        ThirdPersonCam.SetActive(true);
-        CurrentCameraTransform = ThirdPersonCam.transform;
-    }
+    public Animator cameraAnimator; 
+    private bool isFirstPerson = false;
+    [SerializeField] private InputActionReference _lookAction;
+    private Vector2 _lookInput;
     private void Awake()
     {
         inputActions = new InputSystem_Actions();
@@ -32,16 +23,32 @@ public class CameraControllers : MonoBehaviour, InputSystem_Actions.ICameraContr
 
     public void OnChangeCamera(InputAction.CallbackContext context)
     {
-        ChangeCamera = !ChangeCamera;
+        isFirstPerson = !isFirstPerson;
+        if (isFirstPerson)
+        {
+            cameraAnimator.Play("FirstPerson");
+            CurrentCameraTransform = FirstPersonCam.transform;
+        }
+        else
+        {
+            cameraAnimator.Play("ThirdPerson");
+            CurrentCameraTransform = ThirdPersonCam.transform;
+        }
     }
 
     public void OnEnable()
     {
         inputActions.Enable();
+        _lookAction.action.Enable();
+        _lookAction.action.performed += OnLook;
+        _lookAction.action.canceled += OnLook;
     }
     private void OnDisable()
     {
         inputActions.Disable();
+        _lookAction.action.performed -= OnLook;
+        _lookAction.action.canceled -= OnLook;
+        _lookAction.action.Disable();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -52,27 +59,27 @@ public class CameraControllers : MonoBehaviour, InputSystem_Actions.ICameraContr
     }
     void Update()
     {
-        if (ChangeCamera)
+        if (isFirstPerson)
         {
-            ChangeThirdPerson();
-        }
-        else
-        {
-            ChangeFirstPerson();
-            float mouseX = Input.GetAxisRaw("Mouse X") * _senseX;
-            float mouseY = Input.GetAxisRaw("Mouse Y") * _senseY;
+            float mouseX = _lookInput.x * _senseX;
+            float mouseY = _lookInput.y * _senseY;
+
             rotationY += mouseX;
             rotationX -= mouseY;
             rotationX = Mathf.Clamp(rotationX, -67.5f, 67.5f);
         }
     }
+
     private void LateUpdate()
     {
-        if (!ChangeCamera)
+        if (isFirstPerson)
         {
             FirstPersonCam.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
         }
     }
 
-
+    public void OnLook(InputAction.CallbackContext ctx)
+    {
+        _lookInput = ctx.ReadValue<Vector2>();
+    }
 }
