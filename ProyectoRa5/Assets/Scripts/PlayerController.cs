@@ -64,16 +64,19 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
     {
         if (context.started)
         {
-            isDancing = true;
-            animator.SetBool("dance", true);
-            // Para el movimiento mientras baila
-            moveInput = Vector2.zero;
+            if (moveBehaviour.IsGrounded(transform))
+            {
+                isDancing = true;
+                animator.SetBool("dance", true);
+                // Para el movimiento mientras baila
+                moveInput = Vector2.zero;
 
-            previousCameraTransform = cameraControllers.CurrentCameraTransform;
-            danceCam.SetActive(true);
-            //Le dice a CameraControllers que use la cámara de baile
-            cameraControllers.CurrentCameraTransform = danceCam.transform;
-            cameraControllers.SetDanceCamera(true);
+                previousCameraTransform = cameraControllers.CurrentCameraTransform;
+                danceCam.SetActive(true);
+                //Le dice a CameraControllers que use la cámara de baile
+                cameraControllers.CurrentCameraTransform = danceCam.transform;
+                cameraControllers.SetDanceCamera(true);
+            }
         }
     }
     public void OnSprint(InputAction.CallbackContext context)
