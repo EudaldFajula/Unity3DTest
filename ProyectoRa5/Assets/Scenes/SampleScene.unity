@@ -711,7 +711,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.014314567, y: 0.0027921114, z: -0.000039972114, w: 0.99989367}
+  m_LocalRotation: {x: 0.014314453, y: 0.0048390958, z: -0.00006927691, w: 0.99988586}
   m_LocalPosition: {x: 0, y: 1.5035291, z: -4.768585}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -888,6 +888,115 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4989481681060946092, guid: 120d7631bf5b4b94f8271411b1868e06, type: 3}
   m_PrefabInstance: {fileID: 1610707680}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &361696788
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 361696789}
+  - component: {fileID: 361696791}
+  - component: {fileID: 361696793}
+  - component: {fileID: 361696792}
+  m_Layer: 6
+  m_Name: DanceCam
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &361696789
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361696788}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.99992806, z: -0.011997398, w: 0}
+  m_LocalPosition: {x: 0, y: 1.5, z: 2.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 584375034}
+  m_LocalEulerAnglesHint: {x: 1.375, y: -0.04, z: 0}
+--- !u!114 &361696791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361696788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
+  Priority:
+    Enabled: 0
+    m_Value: 0
+  OutputChannel: 1
+  StandbyUpdate: 2
+  m_StreamingVersion: 20241001
+  m_LegacyPriority: 0
+  Target:
+    TrackingTarget: {fileID: 1328783148}
+    LookAtTarget: {fileID: 0}
+    CustomLookAtTarget: 0
+  Lens:
+    FieldOfView: 60.000004
+    OrthographicSize: 5
+    NearClipPlane: 0.3
+    FarClipPlane: 1000
+    Dutch: 0
+    ModeOverride: 0
+    PhysicalProperties:
+      GateFit: 2
+      SensorSize: {x: 21.946, y: 16.002}
+      LensShift: {x: 0, y: 0}
+      FocusDistance: 10
+      Iso: 200
+      ShutterSpeed: 0.005
+      Aperture: 16
+      BladeCount: 5
+      Curvature: {x: 2, y: 11}
+      BarrelClipping: 0.25
+      Anamorphism: 0
+  BlendHint: 0
+--- !u!114 &361696792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361696788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e8b78ac948f05a46a6d8339a503172b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineHardLookAt
+  LookAtOffset: {x: 0, y: 1.44, z: 0}
+--- !u!114 &361696793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361696788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b617507da6d07e749b7efdb34e1173e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineFollow
+  TrackerSettings:
+    BindingMode: 1
+    PositionDamping: {x: 1, y: 1, z: 1}
+    AngularDampingMode: 0
+    RotationDamping: {x: 1, y: 1, z: 1}
+    QuaternionDamping: 1
+  FollowOffset: {x: 0, y: 1.5, z: 2.5}
 --- !u!1 &399522727
 GameObject:
   m_ObjectHideFlags: 0
@@ -1110,7 +1219,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 399522727}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.014314564, y: 0.002792111, z: -0.0000399721, w: 0.99989367}
+  m_LocalRotation: {x: 0.014314452, y: 0.0048390953, z: -0.0000692769, w: 0.99988586}
   m_LocalPosition: {x: 6.91642, y: 1.3435291, z: -11.081116}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1752,6 +1861,7 @@ Transform:
   m_Children:
   - {fileID: 2037280406}
   - {fileID: 330585546}
+  - {fileID: 361696789}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &584375035
@@ -7801,7 +7911,7 @@ GameObject:
   - component: {fileID: 1328783153}
   - component: {fileID: 1328783154}
   m_Layer: 6
-  m_Name: GameObject
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7860,10 +7970,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraControllers
   FirstPersonCam: {fileID: 1897006483}
   ThirdPersonCam: {fileID: 399522727}
+  mainCamera: {fileID: 330585545}
+  firstPersonCullingMask:
+    serializedVersion: 2
+    m_Bits: 4031
+  thirdPersonCullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
   _senseX: 1
   _senseY: 1
+  playerController: {fileID: 1328783151}
   CurrentCameraTransform: {fileID: 399522732}
   cameraAnimator: {fileID: 584375035}
+  isFirstPerson: 0
   _lookAction: {fileID: 1744637326}
 --- !u!114 &1328783151
 MonoBehaviour:
@@ -7878,10 +7997,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   animator: {fileID: 2129667034}
+  isDancing: 0
   interactBehavior: {fileID: 512977999}
   interactionCollider: {fileID: 512977998}
   gameDataController: {fileID: 200409493}
-  cameraTransform: {fileID: 1328783150}
+  cameraControllers: {fileID: 1328783150}
+  danceCam: {fileID: 361696788}
 --- !u!54 &1328783153
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10465,7 +10586,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineStateDrivenCamera
   Priority:
     Enabled: 0
-    m_Value: 0
+    m_Value: 20
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20241001

@@ -20,43 +20,44 @@ public class MoveBehaviour : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
     }
 
-    public void MoveCharacter(Vector2 input, Transform cameraTransform, bool isSprinting)
+    public void MoveCharacter(Vector2 input, Transform cameraTransform, bool isSprinting, bool isFirstPerson = false, float firstPersonYRotation = 0f)
     {
-        // Movimiento relativo a la cámara
-        Vector3 forward = cameraTransform.forward;
-        Vector3 right = cameraTransform.right;
+        Vector3 forward;
+        Vector3 right;
 
-        forward.y = 0f;
-        right.y = 0f;
-
-        forward.Normalize();
-        right.Normalize();
+        if (isFirstPerson)
+        {
+            // En primera persona usa solo la rotacion horizontal para evitar el problema
+            Quaternion flatRotation = Quaternion.Euler(0, firstPersonYRotation, 0);
+            forward = flatRotation * Vector3.forward;
+            right = flatRotation * Vector3.right;
+        }
+        else
+        {
+            forward = cameraTransform.forward;
+            right = cameraTransform.right;
+            forward.y = 0f;
+            right.y = 0f;
+            forward.Normalize();
+            right.Normalize();
+        }
 
         Vector3 move = forward * input.y + right * input.x;
-
-        // Elegir velocidad según sprint
         float currentSpeed = isSprinting ? runSpeed : walkSpeed;
-
-        // Aplicar velocidad
         Vector3 velocity = new Vector3(
             move.x * currentSpeed,
             _rb.linearVelocity.y,
             move.z * currentSpeed
         );
-
         _rb.linearVelocity = velocity;
 
-        // Rotación del personaje
         Vector3 lookDirection = new Vector3(move.x, 0, move.z);
-
         if (lookDirection.sqrMagnitude > 0.01f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10f * Time.deltaTime);
         }
     }
-
-
 
     public void JumpCharacter(Transform transformPlayer)
     {

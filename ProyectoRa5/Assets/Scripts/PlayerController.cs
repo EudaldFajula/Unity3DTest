@@ -9,14 +9,17 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
     private Rigidbody _rb;
     private Vector2 moveInput;
     private bool isSprinting = false;
-    private bool isDancing = false;
+    public bool isDancing = false;
+    
     [SerializeField] private InteractBehavior interactBehavior;
     [SerializeField] private Collider interactionCollider;
     [SerializeField] private GameDataController gameDataController;
     private float velocity;
 
     [Header("Camera Reference")]
-    public CameraControllers cameraTransform;
+    public CameraControllers cameraControllers;
+    public GameObject danceCam; // Asigna aquí tu cámara de baile en el Inspector
+    private Transform previousCameraTransform; // Guarda la cámara anterior al baile
 
     private void Awake()
     {
@@ -26,25 +29,14 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
         moveBehaviour = GetComponent<MoveBehaviour>();
     }
 
-    private void OnEnable()
-    {
-        inputActions.Enable();
-    }
-
-    private void OnDisable()
-    {
-        inputActions.Disable();
-    }
-
-    
+    private void OnEnable() => inputActions.Enable();
+    private void OnDisable() => inputActions.Disable();
 
     #region Metodos Input System
     public void OnMove(InputAction.CallbackContext context)
     {
         if (!isDancing)
-        {
             moveInput = context.ReadValue<Vector2>();
-        }
     }
 
     public void OnJump(InputAction.CallbackContext context)
@@ -55,20 +47,17 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
             moveBehaviour.JumpCharacter(transform);
         }
     }
+
     public void OnInteract(InputAction.CallbackContext context)
     {
-
         if (context.started)
-        {
             interactBehavior.Interact();
-        }
     }
-    public void OnAttack(InputAction.CallbackContext context) 
+
+    public void OnAttack(InputAction.CallbackContext context)
     {
         if (context.started)
-        {
             animator.SetTrigger("attack");
-        }
     }
 
     public void OnDance(InputAction.CallbackContext context)
@@ -77,25 +66,26 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
         {
             isDancing = true;
             animator.SetBool("dance", true);
-
             moveInput = Vector2.zero;
+
+            // Guarda la camara actual y activa la de baile
+            previousCameraTransform = cameraControllers.CurrentCameraTransform;
+            danceCam.SetActive(true);
+            cameraControllers.CurrentCameraTransform = danceCam.transform;
+            cameraControllers.SetDanceCamera(true);
         }
     }
 
     public void OnSprint(InputAction.CallbackContext context)
     {
-        if (context.started)
-            isSprinting = true;
-
-        if (context.canceled)
-            isSprinting = false;
+        if (context.started) isSprinting = true;
+        if (context.canceled) isSprinting = false;
     }
+
     public void OnSaveGame(InputAction.CallbackContext context)
     {
         if (context.started)
-        {
             gameDataController.SaveData();
-        }
     }
     #endregion
 
@@ -104,11 +94,19 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
     {
         animator.SetFloat("speed", velocity);
     }
+
     private void FixedUpdate()
     {
         velocity = new Vector3(_rb.linearVelocity.x, 0, _rb.linearVelocity.z).magnitude;
-        moveBehaviour.MoveCharacter(moveInput, cameraTransform.CurrentCameraTransform, isSprinting);
+        moveBehaviour.MoveCharacter(
+            moveInput,
+            cameraControllers.CurrentCameraTransform,
+            isSprinting,
+            cameraControllers.isFirstPerson,           // Necesitas hacerlo public
+            cameraControllers.FirstPersonYRotation
+        );
     }
+
     private void LateUpdate()
     {
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
@@ -119,6 +117,11 @@ public class PlayerController : MonoBehaviour, InputSystem_Actions.IPlayerAction
             {
                 isDancing = false;
                 animator.SetBool("dance", false);
+
+                // Restaura la camara anterior
+                danceCam.SetActive(false);
+                cameraControllers.CurrentCameraTransform = previousCameraTransform;
+                cameraControllers.SetDanceCamera(false);
             }
             return;
         }
